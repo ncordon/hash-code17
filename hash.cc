@@ -1,6 +1,5 @@
 #include<iostream>
 #include<vector>
-
 using namespace std;
 typedef int Int;
 typedef float Float;
@@ -12,10 +11,10 @@ vector<Float> datacenter_latencies;
 vector< vector<Float> > caches;
 
 int main() {
-  // Params
+  // Lee los parámetros
   cin >> v >> e >> r >> c >> x;
   
-  // Sizes
+  // Tamaños de los vídeos
   sizes = vector<Int>(v,0);
   for (int i=0; i<v; i++)
     cin >> sizes[i];
@@ -50,7 +49,37 @@ int main() {
   }
 
   // Elige los vídeos que va a usar, cogiendo los de más molonosidad
-  // Multiplica inversamente la molonosidad por el tamaño para elegir cuál usar
+  // (?) Multiplica inversamente la molonosidad por el tamaño para elegir cuál usar
   cout << c << endl;
-  for ()
+  
+  for (int i=0; i<c; i++) {
+    Int currentsize = 0;
+    cout << i << ' ';
+    
+    // Métele vídeos
+    while(true) {
+      // Busca el vídeo más molón
+      int maxindex = 0;
+      int maxmolonosidad = caches[i][0];
+      for (int j=0; j<v; j++) {
+	if (caches[i][j] > maxmolonosidad) {
+	  maxmolonosidad = caches[i][j];
+	  maxindex = j;
+	}
+      }
+      
+      // Inserta el vídeo más molón y lo deja con cero de molonosidad
+      currentsize += sizes[maxindex];
+      caches[i][maxindex] = 0;
+
+      // ¿Ha ido todo bien?
+      if (currentsize > x) break; // No podemos meter más vídeos
+      if (maxmolonosidad == 0) break; // Tampoco iban a aportar nada más
+      
+      // Lo escribe ya en output
+      cout << maxindex << ' ';
+    }
+
+    cout << endl;
+  }
 }
