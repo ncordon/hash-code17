@@ -69,7 +69,7 @@ int main() {
   
   cout << c << endl;
 
-  // OPTIMIZACIÓN 5
+  // // OPTIMIZACIÓN 5
   // Cuánto tarda un endpoint en coger un vídeo?
   cuantotarda = vector< vector<Float> >(e, vector<Float>(v,0));
   for (int i=0; i<e; i++) {
@@ -77,7 +77,7 @@ int main() {
       cuantotarda[i][j] = datacenter_latencies[i];
     }
   }
-  // OPTIMIZACIÓN 5
+  // // OPTIMIZACIÓN 5
   
   // Para cada caché
   for (int i=0; i<c; i++) {
@@ -112,14 +112,17 @@ int main() {
       for (int u=0; u<e; u++) { // OPTIMIZACIón 5 cambia líneas aquí
 	for (int b=0; b<c; b++) {
 	  if (b != i) {
-	    if (cuantotarda[u][maxindex] > endpoints[u][i]) // Optimización 6
+	     if (cuantotarda[u][maxindex] > endpoints[u][i]) // Optimización 6
 	      caches[b][maxindex] -= videorequests[u][maxindex] * (cuantotarda[u][maxindex] - endpoints[u][i]);
+	     //	      caches[b][maxindex] -= videorequests[u][maxindex] * (datacenter_latencies[u] - endpoints[u][i]);
 	  }
 	}
 
 	// Actualiza cuánto tarda
-	if (cuantotarda[u][maxindex] > endpoints[u][i])
+	if (cuantotarda[u][maxindex] > endpoints[u][i]) {
+	  cerr << "asdf";
 	  cuantotarda[u][maxindex] = endpoints[u][i];
+	}
       }
       // ENDOPTIMIZACIÓN 2
     }
