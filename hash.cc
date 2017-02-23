@@ -14,15 +14,12 @@ vector< vector<Float> > videorequests;
 int main() {
   // Lee los parámetros
   cin >> v >> e >> r >> c >> x;
-  cerr << v << ' ' << e << ' ' << r << ' ' << c << ' ' << x << endl;
   
   // Tamaños de los vídeos
   sizes = vector<Int>(v,0);
   for (int i=0; i<v; i++) {
     cin >> sizes[i];
-    cerr << sizes[i] << ' ';
   }
-  cerr << endl;
   
   // Endpoints
   datacenter_latencies = vector<Float>(e, 0);
