@@ -57,6 +57,11 @@ int main() {
 
   // Elige los vídeos que va a usar, cogiendo los de más molonosidad
   // Multiplica inversamente la molonosidad por el tamaño para elegir cuál usar
+  for (int i=0; i<c; i++)
+    for (int j=0; j<v; j++)
+      caches[i][j] *= (1.0 / sizes[j]);
+  
+  
   cout << c << endl;
 
   // Para cada caché
@@ -68,10 +73,10 @@ int main() {
     while(true) {
       // Busca el vídeo más molón
       int maxindex = 0;
-      int maxmolonosidad = caches[i][0] * (1.0/sizes[0]);
+      int maxmolonosidad = caches[i][0];
       for (int j=0; j<v; j++) {
 	if (caches[i][j] > maxmolonosidad) {
-	  maxmolonosidad = caches[i][j] * (1.0/sizes[j]);
+	  maxmolonosidad = caches[i][j];
 	  maxindex = j;
 	}
       }
@@ -84,8 +89,11 @@ int main() {
       if (currentsize > x) break; // No podemos meter más vídeos
       if (maxmolonosidad == 0) break; // Tampoco iban a aportar nada más
       
-      // Lo escribe ya en output
+      // Lo escribe ya en output y le quita molonosidad a meterlo en otras cachés
       cout << maxindex << ' ';
+      // ASDFASDFASDF
+      //      for (int b=0; b ) 
+      // ASDFASDFASDF
     }
 
     cout << endl;
