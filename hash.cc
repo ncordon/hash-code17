@@ -13,18 +13,25 @@ vector< vector<Float> > caches;
 int main() {
   // Lee los parámetros
   cin >> v >> e >> r >> c >> x;
+  cerr << v << ' ' << e << ' ' << r << ' ' << c << ' ' << x << endl;
   
   // Tamaños de los vídeos
   sizes = vector<Int>(v,0);
-  for (int i=0; i<v; i++)
+  for (int i=0; i<v; i++) {
     cin >> sizes[i];
+    cerr << sizes[i] << ' ';
+  }
+  cerr << endl;
   
   // Endpoints
+  datacenter_latencies = vector<Float>(e, 0);
   endpoints = vector< vector<Float> >(e, vector<Float>(c,-1));
   for (int i=0; i<e; i++) {
+    // Su distancia al datacenter
     cin >> datacenter_latencies[i];
-    int k; 
-    cin >> k;
+    // Está conectado a sólo k caches
+    int k; cin >> k;
+    
     for (int j=0; j<k; j++) {
       int index;
       cin >> index;
@@ -49,9 +56,10 @@ int main() {
   }
 
   // Elige los vídeos que va a usar, cogiendo los de más molonosidad
-  // (?) Multiplica inversamente la molonosidad por el tamaño para elegir cuál usar
+  // TODO: Multiplica inversamente la molonosidad por el tamaño para elegir cuál usar
   cout << c << endl;
-  
+
+  // Para cada caché
   for (int i=0; i<c; i++) {
     Int currentsize = 0;
     cout << i << ' ';
