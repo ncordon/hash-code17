@@ -9,6 +9,7 @@ vector<Int> sizes;
 vector< vector<Float> > endpoints;
 vector<Float> datacenter_latencies;
 vector< vector<Float> > caches;
+vector< vector<Float> > videorequests;
 
 int main() {
   // Lee los parámetros
@@ -42,10 +43,13 @@ int main() {
   // Calcula molonosidad de cada vídeo en cada caché
   // Requests
   caches = vector< vector<Float> >(c,vector<Float>(v,0));
+  videorequests = vector< vector<Float> >(e, vector<Float>(v,0));
+  
   for (int a=0; a<r; a++) {
     int video, endpoint, requests;
     cin >> video >> endpoint >> requests;
-
+    videorequests[endpoint][video] = requests;
+    
     // Para cada cache
     for (int i=0; i<c; i++) {
       // Si está conectado al endpoint
@@ -56,11 +60,14 @@ int main() {
   }
 
   // Elige los vídeos que va a usar, cogiendo los de más molonosidad
+
+  // OPTIMIZACIÓN 1
   // Multiplica inversamente la molonosidad por el tamaño para elegir cuál usar
   for (int i=0; i<c; i++)
     for (int j=0; j<v; j++)
       caches[i][j] *= (1.0 / sizes[j]);
-  
+  // OPTIMIZACIÓN 1
+
   
   cout << c << endl;
 
@@ -91,9 +98,16 @@ int main() {
       
       // Lo escribe ya en output y le quita molonosidad a meterlo en otras cachés
       cout << maxindex << ' ';
-      // ASDFASDFASDF
-      //      for (int b=0; b ) 
-      // ASDFASDFASDF
+
+      
+      // OPTIMIZACIÓN 2
+      for (int b=0; b<c; b++) {
+	for (int u=0; u<e; u++) {
+	  if (b != i)
+	    caches[b][maxindex] -= videorequests[u][maxindex] * (datacenter_latencies[u] - endpoints[u][i]);
+	}
+      }
+      // ENDOPTIMIZACIÓN 2
     }
 
     cout << endl;
