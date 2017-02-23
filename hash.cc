@@ -68,10 +68,10 @@ int main() {
     while(true) {
       // Busca el vídeo más molón
       int maxindex = 0;
-      int maxmolonosidad = caches[i][0] * (1/sizes[0]);
+      int maxmolonosidad = caches[i][0] * (1.0/sizes[0]);
       for (int j=0; j<v; j++) {
 	if (caches[i][j] > maxmolonosidad) {
-	  maxmolonosidad = caches[i][j] * (1/sizes[j]);
+	  maxmolonosidad = caches[i][j] * (1.0/sizes[j]);
 	  maxindex = j;
 	}
       }
