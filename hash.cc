@@ -10,6 +10,7 @@ vector< vector<Float> > endpoints;
 vector<Float> datacenter_latencies;
 vector< vector<Float> > caches;
 vector< vector<Float> > videorequests;
+vector< vector<Float> > cuantotarda;
 
 int main() {
   // Lee los parámetros
@@ -68,6 +69,16 @@ int main() {
   
   cout << c << endl;
 
+  // OPTIMIZACIÓN 5
+  // Cuánto tarda un endpoint en coger un vídeo?
+  cuantotarda = vector< vector<Float> >(e, vector<Float>(v,0));
+  for (int i=0; i<e; i++) {
+    for (int j=0; j<v; j++) {
+      cuantotarda[i][j] = datacenter_latencies[i];
+    }
+  }
+  // OPTIMIZACIÓN 5
+  
   // Para cada caché
   for (int i=0; i<c; i++) {
     Int currentsize = 0;
@@ -98,11 +109,17 @@ int main() {
 
       
       // OPTIMIZACIÓN 2
-      for (int b=0; b<c; b++) {
-	for (int u=0; u<e; u++) {
-	  if (b != i)
-	    caches[b][maxindex] -= videorequests[u][maxindex] * (datacenter_latencies[u] - endpoints[u][i]);
+      for (int u=0; u<e; u++) { // OPTIMIZACIón 5 cambia líneas aquí
+	for (int b=0; b<c; b++) {
+	  if (b != i) {
+	    if (cuantotarda[u][maxindex] > endpoints[u][i]) // Optimización 6
+	      caches[b][maxindex] -= videorequests[u][maxindex] * (cuantotarda[u][maxindex] - endpoints[u][i]);
+	  }
 	}
+
+	// Actualiza cuánto tarda
+	if (cuantotarda[u][maxindex] > endpoints[u][i])
+	  cuantotarda[u][maxindex] = endpoints[u][i];
       }
       // ENDOPTIMIZACIÓN 2
     }
